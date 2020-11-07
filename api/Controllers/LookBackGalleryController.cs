@@ -47,8 +47,7 @@ namespace api.Controllers
                                 Day = 0213, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200213.JPG" }
                             }
                         }
-                    }
-                    ,
+                    },
                     new LookBackGalleryMonthModel {
                         Month = 3,
                         DayList = new List<LookBackGalleryDayModel> {
@@ -57,6 +56,17 @@ namespace api.Controllers
                             },
                             new LookBackGalleryDayModel {
                                 Day = 0302, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200302-01.JPG", "http://photoimg.2020.zhangyuan.net/20200302-02.JPG" }
+                            },
+                            new LookBackGalleryDayModel {
+                                Day = 0311, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200311.JPG" }
+                            }
+                        }
+                    },
+                    new LookBackGalleryMonthModel {
+                        Month = 4,
+                        DayList = new List<LookBackGalleryDayModel> {
+                            new LookBackGalleryDayModel {
+                                Day = 0412, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200412-01.JPG", "http://photoimg.2020.zhangyuan.net/20200412-02.JPG" }
                             }
                         }
                     }

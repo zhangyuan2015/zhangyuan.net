@@ -16,113 +16,52 @@
 		<h1 style="color: white;">2020</h1>
 
 		<div id="timeline-js" class="timeline-container">
-
 			<button class="timeline-toggle">+ expand all</button>
-
 			<br class="clear">
+		</div>
 
-			<div class="timeline-wrapper">
-				<h2 class="timeline-time"><span>一月</span></h2>
-				<dl class="timeline-series">
-					<dt id="0117" class="timeline-event start-open"><a>0117</a></dt>
-					<dd class="timeline-event-content" id="0117EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200117-%E6%96%B9%E5%A4%A7%E5%9F%8E.jpeg"
-							class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200117-%E6%96%B9%E5%A4%A7%E5%9F%8E.jpeg?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a><br class="clear">
-					</dd>
+	</div>
 
-					<dt id="0127" class="timeline-event start-open"><a>0127</a></dt>
-					<dd class="timeline-event-content" id="0127EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200127.JPG" class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200127.JPG?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a><br class="clear">
-					</dd>
-				</dl>
-			</div>
-
-			<div class="timeline-wrapper">
-				<h2 class="timeline-time"><span>二月</span></h2>
-				<dl class="timeline-series">
-					<dt id="0213" class="timeline-event"><a>0213</a></dt>
-					<dd class="timeline-event-content" id="0213EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200213.JPG" class="CBmodal group">
-							<img src="http://photoimg.2020.zhangyuan.net/20200213.JPG?imageView2/1/w/320/h/200/format/webp/q/75"
-								alt="" />
-						</a>
-						<br class="clear">
-					</dd>
-				</dl>
-			</div>
-
-			<div class="timeline-wrapper">
-				<h2 class="timeline-time"><span>三月</span></h2>
-				<dl class="timeline-series">
-					<dt id="0301" class="timeline-event"><a>0301</a></dt>
-					<dd class="timeline-event-content" id="0301EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200301-01.JPG" class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200301-01.JPG?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a>
-						<a href="http://photoimg.2020.zhangyuan.net/20200301-02.JPG" class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200301-02.JPG?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a>
-					</dd>
+	<script type="text/html" id="template1">
+		{{each(i,monthModel) monthList}}
+		<div class="timeline-wrapper">
+			<h2 class="timeline-time"><span>${monthModel.month}</span></h2>
+			<dl class="timeline-series">
+				{{each(i,dayModel) monthModel.dayList}}
+				<dt id="${dayModel.day}" class="timeline-event start-open"><a>${dayModel.day}</a></dt>
+				<dd class="timeline-event-content" id="${dayModel.day}EX">
+					{{each(i,url) dayModel.urlList}}
+					<a href="${url}" class="CBmodal group">
+						<img src="${url}?imageView2/1/w/320/h/200/format/webp/q/75" />
+					</a>
+					{{/each}}
 					<br class="clear">
-					<dt id="0302" class="timeline-event"><a>0302</a></dt>
-					<dd class="timeline-event-content" id="0302EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200302-01.JPG" class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200302-01.JPG?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a>
-						<a href="http://photoimg.2020.zhangyuan.net/20200302-02.JPG" class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200302-02.JPG?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a>
-					</dd>
-					<br class="clear">
-					<dt id="0311" class="timeline-event"><a>0311</a></dt>
-					<dd class="timeline-event-content" id="0311EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200311.JPG" class="CBmodal group">
-							<img
-								src="http://photoimg.2020.zhangyuan.net/20200311.JPG?imageView2/1/w/320/h/200/format/webp/q/75" />
-						</a>
-					</dd>
-				</dl>
-			</div>
-
-			<div class="timeline-wrapper">
-				<h2 class="timeline-time"><span>四月</span></h2>
-				<dl class="timeline-series">
-					<dt id="0412" class="timeline-event"><a>0412</a></dt>
-					<dd class="timeline-event-content" id="0412EX">
-						<a href="http://photoimg.2020.zhangyuan.net/20200412-01.JPG" class="CBmodal group">
-							<img src="http://photoimg.2020.zhangyuan.net/20200412-01.JPG?imageView2/1/w/320/h/200/format/webp/q/75"
-								alt="" />
-						</a>
-						<a href="http://photoimg.2020.zhangyuan.net/20200412-02.JPG" class="CBmodal group">
-							<img src="http://photoimg.2020.zhangyuan.net/20200412-02.JPG?imageView2/1/w/320/h/200/format/webp/q/75"
-								alt="" />
-						</a>
-					</dd>
-				</dl>
-			</div>
-
-			<br class="clear">
-		</div><!-- /#timelineContainer -->
-
-	</div><!-- /.container -->
+				</dd>
+			{{/each}}
+			</dl>
+		</div>
+		{{/each}}
+	</script>
 
 	<!-- GLOBAL CORE SCRIPTS -->
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script type="text/javascript" src="static/inc/colorbox.js"></script>
 	<script type="text/javascript" src="static/js/timeliner.min.js"></script>
+	<script type="text/javascript" src="static/js/jquery.tmpl.min.js"></script>
+	<script type="text/javascript" src="static/js/LookBackGallery.js"></script>
 	<script>
 		$(document).ready(function () {
-			
+			$.timeliner({});
+			$.timeliner({
+				timelineContainer: '#timeline-js',
+				timelineSectionMarker: '.milestone',
+				oneOpen: true,
+				startState: 'open',
+				expandAllText: '+ 展开所有',
+				collapseAllText: '- 折叠所有'
+			});
+			// Colorbox Modal
+			$(".CBmodal").colorbox({ rel: 'group', transition: "fade", width: "90%", height: "90%" });
 		});
 	</script>
 
