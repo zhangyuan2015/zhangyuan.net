@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
+using api.LookBackGallery.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,58 +21,10 @@ namespace api.Controllers
             return GetModel(year);
         }
 
-        private LookBackGalleryModel GetModel(int year)
+        private static LookBackGalleryModel GetModel(int year)
         {
-            List<LookBackGalleryModel> resList = new List<LookBackGalleryModel>();
-            resList.Add(new LookBackGalleryModel
-            {
-                Year = 2020,
-                MonthList = new List<LookBackGalleryMonthModel>() {
-                    new LookBackGalleryMonthModel {
-                        Month = 1,
-                        DayList = new List<LookBackGalleryDayModel> {
-                            new LookBackGalleryDayModel {
-                                Day = 0117, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200117.JPG"}
-                            },
-                            new LookBackGalleryDayModel {
-                                Day = 0127, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200127.JPG" }
-                            }
-                        }
-                    },
-                    new LookBackGalleryMonthModel {
-                        Month = 2,
-                        DayList = new List<LookBackGalleryDayModel> {
-                            new LookBackGalleryDayModel {
-                                Day = 0213, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200213.JPG" }
-                            }
-                        }
-                    },
-                    new LookBackGalleryMonthModel {
-                        Month = 3,
-                        DayList = new List<LookBackGalleryDayModel> {
-                            new LookBackGalleryDayModel {
-                                Day = 0301, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200301-01.JPG", "http://photoimg.2020.zhangyuan.net/20200301-02.JPG" }
-                            },
-                            new LookBackGalleryDayModel {
-                                Day = 0302, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200302-01.JPG", "http://photoimg.2020.zhangyuan.net/20200302-02.JPG" }
-                            },
-                            new LookBackGalleryDayModel {
-                                Day = 0311, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200311.JPG" }
-                            }
-                        }
-                    },
-                    new LookBackGalleryMonthModel {
-                        Month = 4,
-                        DayList = new List<LookBackGalleryDayModel> {
-                            new LookBackGalleryDayModel {
-                                Day = 0412, UrlList = new List<string> { "http://photoimg.2020.zhangyuan.net/20200412-01.JPG", "http://photoimg.2020.zhangyuan.net/20200412-02.JPG" }
-                            }
-                        }
-                    }
-                }
-            });
-
-            return resList.FirstOrDefault(a => a.Year == year);
+            var str = System.IO.File.ReadAllText(@$"./LookBackGallery/File/Data_{year}.json");
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<LookBackGalleryModel>(str);
         }
     }
 }
