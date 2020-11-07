@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.get("http://localhost:5000/LookBackGallery?year=2020", function (data, status) {
+    $.get("http://23.105.193.208:5000/LookBackGallery?year=2020", function (data, status) {
         console.log("Status: " + status);
         $('#template1').tmpl(data).appendTo('#timeline-js')
 
