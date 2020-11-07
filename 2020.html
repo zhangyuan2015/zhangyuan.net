@@ -23,7 +23,8 @@
 			<h2 class="timeline-time"><span>${monthModel.month}</span></h2>
 			<dl class="timeline-series">
 				{{each(i,dayModel) monthModel.dayList}}
-				<dt id="${dayModel.day}" class="timeline-event start-open"><a>${dayModel.day}</a></dt>
+				<br/>
+				<dt id="${dayModel.day}" class="timeline-event start-open" style="margin: 0 0 2px"><a>${dayModel.day}</a></dt>
 				<dd class="timeline-event-content" id="${dayModel.day}EX">
 					{{each(i,url) dayModel.urlList}}
 					<a href="${url}" class="CBmodal group">
