@@ -14,7 +14,8 @@ namespace api.Controllers
     public class LookBackGalleryController : ControllerBase
     {
         private const string FILEPATH = "./LookBackGallery/File/Data_{0}.json";
-        private static string[] CNMONTH = new string[] { "", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" };
+        private static string[] CNMONTH = new string[] { "", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" };
+        private const string PHOTOHOST = "http://photoimg.2020.zhangyuan.net/";
 
         private readonly ILogger<LookBackGalleryController> _logger;
 
@@ -45,6 +46,8 @@ namespace api.Controllers
                 var fileNameSpl = fileName.Split(new char[] { '-', '.' }, StringSplitOptions.RemoveEmptyEntries);
                 var date = DateTime.ParseExact(fileNameSpl[0], "yyyyMMdd", CultureInfo.InvariantCulture);
 
+                var fileUrl = PHOTOHOST + fileName;
+
                 var paramYear = paramList.FirstOrDefault(a => a.Year == date.Year.ToString());
                 if (paramYear == null)
                 {
@@ -56,8 +59,8 @@ namespace api.Controllers
                                 Month = CNMONTH[date.Month],
                                 DayList = new List<LookBackGalleryDayModel> {
                                     new LookBackGalleryDayModel {
-                                        Day = date.Day.ToString(),
-                                        UrlList = new List<string> { fileName }
+                                        Day = ConvertDay(date),
+                                        UrlList = new List<string> { fileUrl }
                                     }
                                 }
                             }
@@ -75,8 +78,8 @@ namespace api.Controllers
                             Month = CNMONTH[date.Month],
                             DayList = new List<LookBackGalleryDayModel> {
                                 new LookBackGalleryDayModel {
-                                    Day = date.Day.ToString(),
-                                    UrlList = new List<string> { fileName }
+                                    Day = ConvertDay(date),
+                                    UrlList = new List<string> { fileUrl }
                                 }
                             }
                         };
@@ -84,21 +87,21 @@ namespace api.Controllers
                     }
                     else
                     {
-                        var paramDay = paramMonth.DayList.FirstOrDefault(a => a.Day == date.Day.ToString());
+                        var paramDay = paramMonth.DayList.FirstOrDefault(a => a.Day == ConvertDay(date));
                         if (paramDay == null)
                         {
                             paramDay = new LookBackGalleryDayModel
                             {
-                                Day = date.Day.ToString(),
-                                UrlList = new List<string> { fileName }
+                                Day = ConvertDay(date),
+                                UrlList = new List<string> { fileUrl }
                             };
                             paramMonth.DayList.Add(paramDay);
                         }
                         else
                         {
-                            var paramFileName = paramDay.UrlList.FirstOrDefault(a => a == fileName);
+                            var paramFileName = paramDay.UrlList.FirstOrDefault(a => a == fileUrl);
                             if (paramFileName == null)
-                                paramDay.UrlList.Add(fileName);
+                                paramDay.UrlList.Add(fileUrl);
                         }
                     }
                 }
@@ -110,6 +113,11 @@ namespace api.Controllers
             }
 
             return paramList;
+        }
+
+        private static string ConvertDay(DateTime date)
+        {
+            return String.Format("{0:D2}", date.Month) + "-" + String.Format("{0:D2}", date.Day);
         }
 
         private static LookBackGalleryModel GetModel(int year)
