@@ -14,6 +14,7 @@ namespace api.Controllers
     public class LookBackGalleryController : ControllerBase
     {
         private const string FILEPATH = "./LookBackGallery/File/Data_{0}.json";
+        private static string[] CNMONTH = new string[] { "", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" };
 
         private readonly ILogger<LookBackGalleryController> _logger;
 
@@ -38,7 +39,7 @@ namespace api.Controllers
         private static List<LookBackGalleryModel> GenerateDataJsonService(string fileNameText)
         {
             List<LookBackGalleryModel> paramList = new List<LookBackGalleryModel>();
-            List<string> fileNameList = fileNameText.Replace(Environment.NewLine, "^").Split(new char[] { '^', ' ', '-', ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<string> fileNameList = fileNameText.Replace(Environment.NewLine, "^").Split(new char[] { '^', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             foreach (var fileName in fileNameList)
             {
                 var fileNameSpl = fileName.Split(new char[] { '-', '.' }, StringSplitOptions.RemoveEmptyEntries);
@@ -52,7 +53,7 @@ namespace api.Controllers
                         Year = date.Year.ToString(),
                         MonthList = new List<LookBackGalleryMonthModel> {
                             new LookBackGalleryMonthModel {
-                                Month = date.Month.ToString(),
+                                Month = CNMONTH[date.Month],
                                 DayList = new List<LookBackGalleryDayModel> {
                                     new LookBackGalleryDayModel {
                                         Day = date.Day.ToString(),
@@ -66,12 +67,12 @@ namespace api.Controllers
                 }
                 else
                 {
-                    var paramMonth = paramYear.MonthList.FirstOrDefault(a => a.Month == date.Month.ToString());
+                    var paramMonth = paramYear.MonthList.FirstOrDefault(a => a.Month == CNMONTH[date.Month]);
                     if (paramMonth == null)
                     {
                         paramMonth = new LookBackGalleryMonthModel
                         {
-                            Month = date.Month.ToString(),
+                            Month = CNMONTH[date.Month],
                             DayList = new List<LookBackGalleryDayModel> {
                                 new LookBackGalleryDayModel {
                                     Day = date.Day.ToString(),
