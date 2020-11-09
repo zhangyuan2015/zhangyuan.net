@@ -10,11 +10,12 @@ $(document).ready(function () {
 
 		$("#timeline-js").css({
 			"overflow": "auto",
-			"width": "auto"
+			"width": "auto",
+			"align-content":"center"
 		});
 
 		$(".container").css({
-			"width": "960px"
+			"width": "auto"
 		});
 
 		$.timeliner({});
