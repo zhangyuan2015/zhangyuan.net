@@ -1,5 +1,0 @@
-﻿docker build -t zhangyuan_net_api .
-
-docker run -d --name zhangyuan_net_api -p 5000:80 zhangyuan_net_api
-
-http://23.105.193.208:5000/LookBackGallery/GenerateDataJson?fileNameText=
