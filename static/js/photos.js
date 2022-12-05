@@ -1,7 +1,7 @@
 $(document).ready(function () {
-	$.get("http://23.105.193.208:5000/LookBackGallery?year=2020", function (data, status) {
+	$.getJSON("/static/json/photos-2020.json", function (monthList, status) {
 		console.log("Status: " + status);
-		$('#template1').tmpl(data).appendTo('#timeline-js')
+		$('#template1').tmpl(monthList).appendTo('#timeline-js')
 
 		$("#timeline-js").css({
 			"overflow": "auto",

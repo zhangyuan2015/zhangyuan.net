@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="yuan’Blog">
+  <meta name="author" content="zhang yuan">
+  <meta name="keywords" content="zhangyuan,深圳,博客,blog,张园">
+
+  <title>Yuan photos</title>
+  <!-- Bootstrap core CSS -->
+  <link href="static/bootstrap-4.1.2-dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="static/css/modern-business.css" rel="stylesheet">
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/js/jquery-3.3.1.min.js"></script>
+  <script src="static/bootstrap-4.1.2-dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="static/js/base.js"></script>
+  <script src="static/js/util.js"></script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Yuan</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto" id="menu">
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <h1 style="color: white;">2020</h1>
+
+    <div id="timeline-js" class="timeline-container">
+      <button class="timeline-toggle">+ expand all</button>
+      <br class="clear">
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+  <script type="text/html" id="template1">
+		{{each(i,monthModel) monthList}}
+		<div class="timeline-wrapper">
+			<h2 class="timeline-time"><span>${monthModel.month}</span></h2>
+			<dl class="timeline-series">
+				{{each(i,dayModel) monthModel.dayList}}
+				<br/>
+				<dt id="${dayModel.day}" class="timeline-event start-open" style="margin: 0 0 2px"><a>${dayModel.day}</a></dt>
+				<dd class="timeline-event-content" id="${dayModel.day}EX">
+					{{each(i,url) dayModel.urlList}}
+					<a href="${url}" class="CBmodal group">
+						<img src="${url}?imageView2/1/w/320/h/200/format/webp/q/75" />
+					</a>
+					{{/each}}
+					<br class="clear">
+				</dd>
+			{{/each}}
+			</dl>
+		</div>
+		{{/each}}
+	</script>
+
+  <!-- GLOBAL CORE SCRIPTS -->
+  <script type="text/javascript" src="static/inc/colorbox.js"></script>
+  <script type="text/javascript" src="static/js/timeliner.min.js"></script>
+  <script type="text/javascript" src="static/js/jquery.tmpl.min.js"></script>
+  <script type="text/javascript" src="static/js/photos.js"></script>
+  <script>
+    $(document).ready(function () {
+      $.timeliner({});
+      $.timeliner({
+        timelineContainer: '#timeline-js',
+        timelineSectionMarker: '.milestone',
+        oneOpen: true,
+        startState: 'open',
+        expandAllText: '+ 展开所有',
+        collapseAllText: '- 折叠所有'
+      });
+      // Colorbox Modal
+      $(".CBmodal").colorbox({ rel: 'group', transition: "fade", width: "90%", height: "90%" });
+    });
+  </script>
+  <link rel="stylesheet" href="static/css/2020-Look-Back.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="static/css/timeliner.min.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="static/css/responsive.min.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="static/inc/colorbox.css" type="text/css" media="screen">
+</body>
+
+</html>
