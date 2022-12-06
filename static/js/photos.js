@@ -1,5 +1,8 @@
 $(document).ready(function () {
 	var year = getQueryVariable("year");
+	if (!year) {
+		year = new Date().getFullYear();
+	}
 	var title = "Yuan photos " + year;
 	document.title = title;
 	$("#h1Title").text(title);
