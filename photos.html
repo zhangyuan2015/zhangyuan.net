@@ -43,7 +43,7 @@
 
   <!-- Page Content -->
   <div class="container">
-    <h1 style="color: white;">2020</h1>
+    <h1 style="color: white;" id="h1Title"></h1>
 
     <div id="timeline-js" class="timeline-container">
       <button class="timeline-toggle">+ expand all</button>
@@ -60,8 +60,8 @@
 			<dl class="timeline-series">
 				{{each(i,dayModel) monthModel.dayList}}
 				<br/>
-				<dt id="${dayModel.day}" class="timeline-event start-open" style="margin: 0 0 2px"><a>${dayModel.day}</a></dt>
-				<dd class="timeline-event-content" id="${dayModel.day}EX">
+				<dt id="${monthModel.month}${dayModel.day}" class="timeline-event start-open" style="margin: 0 0 2px"><a>${dayModel.day}</a></dt>
+				<dd class="timeline-event-content" id="${monthModel.month}${dayModel.day}EX">
 					{{each(i,url) dayModel.urlList}}
 					<a href="${url}" class="CBmodal group">
 						<img src="${url}?imageView2/1/w/320/h/200/format/webp/q/75" />
