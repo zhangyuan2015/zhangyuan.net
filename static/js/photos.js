@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	var year = getQueryVariable("year");
-	if (!year) {
+	if (year == false) {
 		year = new Date().getFullYear();
 	}
 	var title = "Yuan photos " + year;
