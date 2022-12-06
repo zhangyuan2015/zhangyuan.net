@@ -20,7 +20,7 @@ function initMenu() {
             </li>
     */
 
-    $.getJSON('/static/json/menu.json', function (mArr) {
+    $.getJSON('static/json/menu.json', function (mArr) {
         mArr.forEach(m => {
             if (m.items) {
                 var mi = '<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="' + m.url + '" id="navbarDropdownabout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' + m.name + '</a>';
