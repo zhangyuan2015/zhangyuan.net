@@ -56,11 +56,10 @@
   <script type="text/html" id="template1">
 		{{each(i,monthModel) monthList}}
 		<div class="timeline-wrapper">
-			<h2 class="timeline-time"><span>${monthModel.month}</span></h2>
 			<dl class="timeline-series">
 				{{each(i,dayModel) monthModel.dayList}}
 				<br/>
-				<dt id="${monthModel.month}${dayModel.day}" class="timeline-event start-open" style="margin: 0 0 2px"><a>${dayModel.day}</a></dt>
+				<dt id="${monthModel.month}${dayModel.day}" class="timeline-event start-open" style="margin: 0 0 2px"><a>${monthModel.month}月${dayModel.day}日</a></dt>
 				<dd class="timeline-event-content" id="${monthModel.month}${dayModel.day}EX">
 					{{each(i,url) dayModel.urlList}}
 					<a href="${url}" class="CBmodal group">
@@ -80,7 +79,7 @@
   <script type="text/javascript" src="static/js/timeliner.min.js"></script>
   <script type="text/javascript" src="static/js/jquery.tmpl.min.js"></script>
 
-  <link rel="stylesheet" href="static/css/2020-Look-Back.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="static/css/photos.css" type="text/css" media="screen">
   <link rel="stylesheet" href="static/css/timeliner.min.css" type="text/css" media="screen">
   <link rel="stylesheet" href="static/css/responsive.min.css" type="text/css" media="screen">
   <link rel="stylesheet" href="static/inc/colorbox.css" type="text/css" media="screen">
