@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024年度照片时间线</title>
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <style>
+        /* 基础样式 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #121212; /* 深色背景 */
+            color: #e0e0e0; /* 浅色文字 */
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* 时间轴容器 */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        /* 时间线 */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: #1e88e5; /* 亮蓝色时间线 */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        /* 时间轴项 */
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            min-height: 300px;
+        }
+
+        /* 左右交替布局 */
+        .left { left: 0 }
+        .right { left: 50% }
+
+        /* 内容框 */
+        .content {
+            padding: 20px;
+            background: #1e1e1e; /* 深灰色卡片背景 */
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.3); /* 更深的阴影 */
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        /* 图片样式 */
+        .photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+            cursor: pointer; /* 鼠标悬停时显示手型 */
+        }
+
+        .photo:hover {
+            transform: scale(1.02);
+        }
+
+        /* 时间标记 */
+        .time {
+            color: #1e88e5; /* 亮蓝色时间标记 */
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        h2 {
+            color: #ffffff; /* 白色标题 */
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #b0b0b0; /* 浅灰色描述文字 */
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .timeline::after { left: 30px }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+
+            .left, .right { left: 0 }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin: 40px 0; color: #ffffff;">2024年度回忆时间线</h1>
+    
+    <div class="timeline" id="timelineContainer">
+        <!-- 时间轴内容通过JavaScript动态加载 -->
+    </div>
+
+    <!-- Fancybox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+    <script>
+        // 时间轴数据
+        const timelineData = [
+            {
+                date: "2024-03-15",
+                title: "春日樱花季",
+                photos: [
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200117.JPG", description: "樱花盛开的第一天" },
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200127.JPG", description: "樱花树下的野餐" }
+                ],
+                description: "东京目黑川的樱花长廊"
+            },
+            {
+                date: "2024-06-21",
+                title: "夏日海滩",
+                photos: [
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200213.JPG", description: "海滩日出" },
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200301-01.JPG", description: "沙滩排球比赛" }
+                ],
+                description: "冲绳宫古岛的翡翠海滩"
+            },
+            {
+                date: "2024-09-30",
+                title: "秋日枫景",
+                photos: [
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200301-02.JPG", description: "枫叶初红" },
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200302-01.JPG", description: "枫林小径" }
+                ],
+                description: "京都岚山的红叶隧道"
+            },
+            {
+                date: "2024-12-25",
+                title: "冬季庆典",
+                photos: [
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200302-02.JPG", description: "冰雪节入口" },
+                    { url: "https://doc-static.zhangyuan.net/photos/2020/20200311.JPG", description: "冰雕展览" }
+                ],
+                description: "札幌冰雪节的冰雕展览"
+            }
+        ];
+
+        // 动态生成时间轴
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('timelineContainer');
+            
+            timelineData.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `timeline-item ${index % 2 === 0 ? 'left' : 'right'}`;
+                
+                // 生成图片组
+                const photosHTML = item.photos.map((photo, photoIndex) => `
+                    <a href="${photo.url}" data-fancybox="gallery-${index}" data-caption="${photo.description}">
+                        <img src="${photo.url}" alt="${item.title} - 照片 ${photoIndex + 1}" class="photo">
+                    </a>
+                `).join('');
+
+                itemDiv.innerHTML = `
+                    <div class="content">
+                        <time class="time">${item.date}</time>
+                        <h2>${item.title}</h2>
+                        <div class="photo-group">
+                            ${photosHTML}
+                        </div>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+
+                container.appendChild(itemDiv);
+            });
+
+            // 初始化 Fancybox
+            Fancybox.bind("[data-fancybox]", {
+                // 配置选项
+                Thumbs: {
+                    autoStart: true, // 显示缩略图
+                },
+                Toolbar: {
+                    display: {
+                        left: ["infobar"],
+                        middle: [
+                            "zoomIn",
+                            "zoomOut",
+                            "toggle1to1",
+                            "rotateCCW",
+                            "rotateCW",
+                            "flipX",
+                            "flipY",
+                        ],
+                        right: ["slideshow", "thumbs", "close"],
+                    },
+                },
+            });
+        });
+    </script>
+</body>
+</html>

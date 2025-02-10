@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 时间线照片展示</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .year-nav {
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 20px;
+        }
+        .year-prev:hover {
+            text-decoration: underline;
+        }
+		.year-nav:hover {
+            text-decoration: underline;
+        }
+		.year-next:hover {
+            text-decoration: underline;
+        }
+        .timeline {
+            max-width: 800px;
+            margin: auto;
+            position: relative;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #cccfff;
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+            width: 50%;
+            margin-bottom: 40px;
+        }
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+            text-align: left;
+            margin-left: 50%;
+        }
+        .timeline-item:nth-child(even) {
+            text-align: right;
+            margin-right: 50%;
+        }
+        .content {
+            background: #222;
+            padding: 15px;
+            border-radius: 5px;
+            width: 90%;
+        }
+        .timeline-date {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .gallery a {
+            height: 160px;
+            overflow: hidden;
+            display: block;
+        }
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .arrow-btn {
+            font-size: 2em;
+            cursor: pointer;
+            color: #ffffff;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="arrow-btn" onclick="changeYear('prev')">←</div>
+		<div class="year-prev" id="yearPrev" onclick="changeYear('prev')"></div>
+        <div class="year-nav" id="yearNav"></div>
+		<div class="year-next" id="yearNext" onclick="changeYear('next')"></div>
+        <div class="arrow-btn" onclick="changeYear('next')">→</div>
+    </div>
+
+    <div class="timeline" id="timeline">
+        <!-- Timeline items will be dynamically loaded based on the selected year -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+    <script>
+        // Default year
+        let currentYear = 2024;
+        
+        // Year data (for now, we'll show data only for 2024; you can expand this with actual content)
+        const yearData = {
+            2020: [
+                { date: '2020年1月', image: 'https://doc-static.zhangyuan.net/photos/2020/20200117.JPG', caption: '2020年1月17日' },
+                { date: '2020年1月', image: 'https://doc-static.zhangyuan.net/photos/2020/20200127.JPG', caption: '2020年1月27日' },
+            ],
+            2021: [
+                // Add year 2021 data here
+            ],
+            2022: [
+                // Add year 2022 data here
+            ],
+            2023: [
+                // Add year 2023 data here
+            ],
+            2024: [
+                { date: '2024年1月', image: 'https://doc-static.zhangyuan.net/photos/2020/20200117.JPG', caption: '2024年1月17日' },
+                { date: '2024年1月', image: 'https://doc-static.zhangyuan.net/photos/2020/20200127.JPG', caption: '2024年1月27日' },
+            ],
+            2025: [
+                // Add year 2025 data here
+            ]
+        };
+
+        // Function to load timeline content for the selected year
+        function loadTimeline(year) {
+            const timelineElement = document.getElementById("timeline");
+            const yearContent = yearData[year];
+
+            // Set the current year in the navigation
+			document.getElementById("yearPrev").innerText = year-1;
+            document.getElementById("yearNav").innerText = year;
+			document.getElementById("yearNext").innerText = year+1;
+
+            // Clear existing timeline content
+            timelineElement.innerHTML = '';
+
+            // Dynamically load timeline items
+            yearContent.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'timeline-item';
+                itemElement.innerHTML = `
+                    <div class="content">
+                        <div class="timeline-date">${item.date}</div>
+                        <div class="gallery">
+                            <a href="${item.image}" data-fancybox="${year}" data-caption="${item.caption}">
+                                <img src="${item.image}" alt="${item.caption}">
+                            </a>
+							<a href="${item.image}" data-fancybox="${year}" data-caption="${item.caption}">
+                                <img src="${item.image}" alt="${item.caption}">
+                            </a>
+                        </div>
+                    </div>
+                `;
+                timelineElement.appendChild(itemElement);
+            });
+
+            // Reinitialize Fancybox
+            Fancybox.bind("[data-fancybox]", {
+                Thumbs: {
+                    autoStart: true,
+                },
+            });
+        }
+
+        // Change year based on the arrow click
+        function changeYear(direction) {
+            if (direction === 'prev' && currentYear > 2020) {
+                currentYear--;
+            } else if (direction === 'next' && currentYear < 2025) {
+                currentYear++;
+            }
+            loadTimeline(currentYear);
+        }
+
+        // Load the initial timeline for 2024
+        loadTimeline(currentYear);
+    </script>
+</body>
+</html>
