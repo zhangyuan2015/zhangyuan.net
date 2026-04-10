@@ -36,6 +36,8 @@ chmod 0755 "${DEPLOY_HOME}/deploy.sh"
 
 若从 Windows 拷贝导致无执行位，仍可通过 **`bash ~/deploy.sh`** 运行；CI 已使用 `bash "$HOME/deploy.sh"`。
 
+若出现 **`$'\r': command not found`** 或 **`set: pipefail: invalid option`**，说明脚本是 **CRLF 换行**。在服务器执行：`sed -i 's/\r$//' /home/docker-deploy/deploy.sh`（或重新用仓库里已改为 LF 的版本覆盖）。仓库已加 **`.gitattributes`** 强制 `*.sh` 使用 LF。
+
 ---
 
 ## 三、允许 SSH 密码登录（sshd）
