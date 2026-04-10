@@ -1,3 +1,8 @@
 /api/bin
 /api/obj
 /.vs
+
+# Backend sensitive env files
+backend/.env
+backend/.env.production
+/需求文档

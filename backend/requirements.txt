@@ -1,0 +1,19 @@
+# Web
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.32.0,<1.0.0
+python-multipart>=0.0.12,<1.0.0
+
+# Config & validation
+pydantic>=2.9.0,<3.0.0
+pydantic-settings>=2.6.0,<3.0.0
+
+# DB (ORM + driver)
+SQLAlchemy>=2.0.36,<3.0.0
+PyMySQL>=1.1.1,<2.0.0
+
+# Object storage — upload token
+qiniu>=7.14.0,<8.0.0
+
+# Auth (后续 JWT 登录)
+python-jose[cryptography]>=3.3.0,<4.0.0
+passlib[bcrypt]>=1.7.4,<2.0.0
