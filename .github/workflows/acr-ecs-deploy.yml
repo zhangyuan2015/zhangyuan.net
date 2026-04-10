@@ -1,5 +1,5 @@
-# 当前阶段：仅构建并推送到阿里云 ACR。前后端共用同一镜像仓库 zhangyuan.net，用 b_ / f_ 前缀区分 tag。
-name: Build And Push To ACR
+# 构建并推送 ACR → SSH 登录 ECS 执行部署（先后端再前端）。
+name: Build Push ACR And Deploy ECS
 
 on:
   push:
@@ -8,9 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  # 命名空间固定，与 ACR 控制台一致
   ACR_NAMESPACE: yvan-2000
-  # 与 ACR 中创建的仓库名一致（一个仓库里存后端、前端两套 tag）
   ACR_REPOSITORY: zhangyuan.net
 
 jobs:
@@ -21,7 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 去掉 https://、尾部 /，避免 login/push 域名异常
       - name: Normalize ACR registry host
         run: |
           R="${{ secrets.ACR_REGISTRY }}"
@@ -61,3 +58,38 @@ jobs:
             ./frontend
           docker push ${IMAGE}:f_${{ github.sha }}
           docker push ${IMAGE}:f_latest
+
+  deploy:
+    needs: build-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Normalize ACR registry host
+        run: |
+          R="${{ secrets.ACR_REGISTRY }}"
+          R="${R#http://}"
+          R="${R#https://}"
+          R="${R%/}"
+          echo "ACR_REGISTRY=$R" >> $GITHUB_ENV
+
+      - name: Deploy on ECS via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          ACR_REGISTRY: ${{ env.ACR_REGISTRY }}
+          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+        with:
+          host: ${{ secrets.ECS_HOST }}
+          username: ${{ secrets.ECS_USER || 'docker-deploy' }}
+          password: ${{ secrets.ECS_SSH_PASSWORD }}
+          port: ${{ secrets.ECS_PORT || '22' }}
+          envs: ACR_REGISTRY,ACR_USERNAME,ACR_PASSWORD
+          script: |
+            set -euo pipefail
+            cd /home/zhangyuan.net
+            : > .env.images
+            chmod 600 .env.images
+            echo "BACKEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:b_${{ github.sha }}" >> .env.images
+            echo "FRONTEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:f_${{ github.sha }}" >> .env.images
+            export ACR_REGISTRY ACR_USERNAME ACR_PASSWORD
+            /home/zhangyuan.net/deploy.sh
