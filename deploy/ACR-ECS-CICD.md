@@ -30,7 +30,7 @@ ACR 镜像路径：`<ACR_REGISTRY>/yvan-2000/zhangyuan.net`。
 
 1. 推送 `main` 或手动 **Run workflow**
 2. **build-push**：登录 ACR → 构建并推送后端 → 构建并推送前端
-3. **deploy**：SSH（**密码**）登录 ECS → 写入 **`~/.zhangyuan.env.images`**（默认即 `/home/docker-deploy/.zhangyuan.env.images`，仅镜像 tag）→ `export ENV_IMAGES` 后执行 `deploy.sh`
+3. **deploy**：SSH（**密码**）登录 ECS → 写入 **`~/.zhangyuan.env.images`** → `export ENV_IMAGES` 后执行 **`bash "$HOME/deploy.sh"`**（脚本默认在 **`/home/docker-deploy/`** 与 compose、`.env.production` 同目录）
 
 ---
 
@@ -59,7 +59,7 @@ ACR 镜像路径：`<ACR_REGISTRY>/yvan-2000/zhangyuan.net`。
 
 ## 服务器准备
 
-生产后端环境：`/home/zhangyuan.net/.env.production`（勿提交仓库）。
+生产后端环境：推荐 **`/home/docker-deploy/.env.production`**（与 `docker-compose.prod.yml` 中 `env_file` 一致，勿提交仓库）。
 
 创建用户、目录权限、密码与 `sshd`：**仅命令**见 [`deploy/SERVER-DEPLOY.md`](SERVER-DEPLOY.md)。
 
@@ -68,8 +68,8 @@ ACR 镜像路径：`<ACR_REGISTRY>/yvan-2000/zhangyuan.net`。
 ## 常见问题
 
 - **推送失败 / denied**：见下文「推送报错 denied」。
-- **SSH 部署失败**：检查安全组、`ECS_SSH_PASSWORD`、`PasswordAuthentication`、`ECS_PORT`、`deploy.sh` 与 `docker-compose.prod.yml` 路径。若曾出现 `.env.images: Permission denied`，原因是 `/home/zhangyuan.net` 对 `docker-deploy` 无写权限；当前 workflow 已改为写入 **`~/.zhangyuan.env.images`**。
-- **容器启动失败**：在 ECS 上 `docker compose -f /home/zhangyuan.net/docker-compose.prod.yml --env-file /home/zhangyuan.net/.env.images ps` 与 `logs` 排查。
+- **SSH 部署失败**：检查安全组、`ECS_SSH_PASSWORD`、`PasswordAuthentication`、`ECS_PORT`；确认 **`/home/docker-deploy/deploy.sh`**、**`docker-compose.prod.yml`**、**`.env.production`** 已就位。若 **`deploy.sh: Permission denied`**：路径是否仍为旧的 `/home/zhangyuan.net/deploy.sh`（应改为家目录），或执行 **`chmod +x ~/deploy.sh`**；CI 已用 **`bash "$HOME/deploy.sh"`** 避免依赖可执行位。
+- **容器启动失败**：在 ECS 上 `cd /home/docker-deploy && docker compose -f docker-compose.prod.yml --env-file ~/.zhangyuan.env.images ps` 与 `logs` 排查。
 
 ### 推送报错 `denied: requested access to the resource is denied`
 

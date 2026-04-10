@@ -1,0 +1,23 @@
+services:
+  backend:
+    image: ${BACKEND_IMAGE}
+    container_name: zhangyuan-backend
+    restart: always
+    env_file:
+      - /home/docker-deploy/.env.production
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  frontend:
+    image: ${FRONTEND_IMAGE}
+    container_name: zhangyuan-frontend
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      # 服务端请求（RSC 等）：直连公网 API
+      API_BASE_URL: https://www.zhangyuan.net/api/v1
+      # 浏览器端：同源相对路径（需 Nginx/Caddy 将 /api 反代到后端）
+      NEXT_PUBLIC_API_BASE_URL: /api/v1
+    ports:
+      - "80:3000"

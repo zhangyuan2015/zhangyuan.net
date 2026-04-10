@@ -94,4 +94,5 @@ jobs:
             echo "FRONTEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:f_${{ github.sha }}" >> "${ENV_IMAGES}"
             export ENV_IMAGES
             export ACR_REGISTRY ACR_USERNAME ACR_PASSWORD
-            /home/zhangyuan.net/deploy.sh
+            # 脚本放在部署用户家目录（如 /home/docker-deploy）；用 bash 执行以免未 chmod +x
+            bash "${HOME}/deploy.sh"
