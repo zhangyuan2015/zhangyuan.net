@@ -22,7 +22,7 @@ ACR 镜像路径：`<ACR_REGISTRY>/yvan-2000/zhangyuan.net`。
 - **`API_BASE_URL`**：`https://www.zhangyuan.net/api/v1`（Next 服务端请求）
 - **`NEXT_PUBLIC_API_BASE_URL`**：`/api/v1`（浏览器同源相对路径）
 
-请在 ECS 上配置 Nginx/Caddy 等，将 **`/api`** 反代到本机后端（如 `http://127.0.0.1:8000`）。
+请在 ECS 上配置 Nginx/Caddy：**站点**反代到前端 `http://127.0.0.1:3000`，**`/api`** 反代到后端 `http://127.0.0.1:8000`（与 `docker-compose.prod.yml` 中端口一致）。
 
 ---
 

@@ -1,0 +1,2 @@
+# Shell on Linux requires LF; Windows checkouts must not use CRLF for these
+*.sh text eol=lf

@@ -20,4 +20,5 @@ services:
       # 浏览器端：同源相对路径（需 Nginx/Caddy 将 /api 反代到后端）
       NEXT_PUBLIC_API_BASE_URL: /api/v1
     ports:
-      - "80:3000"
+      # 避免与宿主机 80 冲突；对外由 Nginx 反代 http://127.0.0.1:3000
+      - "127.0.0.1:3000:3000"
