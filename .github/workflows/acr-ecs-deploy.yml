@@ -86,10 +86,12 @@ jobs:
           envs: ACR_REGISTRY,ACR_USERNAME,ACR_PASSWORD
           script: |
             set -euo pipefail
-            cd /home/zhangyuan.net
-            : > .env.images
-            chmod 600 .env.images
-            echo "BACKEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:b_${{ github.sha }}" >> .env.images
-            echo "FRONTEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:f_${{ github.sha }}" >> .env.images
+            # 镜像变量写在部署用户家目录：/home/zhangyuan.net 常为 0750 且无组写权限，无法在该目录创建/截断 .env.images
+            ENV_IMAGES="${HOME}/.zhangyuan.env.images"
+            umask 077
+            : > "${ENV_IMAGES}"
+            echo "BACKEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:b_${{ github.sha }}" >> "${ENV_IMAGES}"
+            echo "FRONTEND_IMAGE=${{ env.ACR_REGISTRY }}/yvan-2000/zhangyuan.net:f_${{ github.sha }}" >> "${ENV_IMAGES}"
+            export ENV_IMAGES
             export ACR_REGISTRY ACR_USERNAME ACR_PASSWORD
             /home/zhangyuan.net/deploy.sh
