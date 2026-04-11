@@ -1,11 +1,17 @@
 # 构建并推送 ACR → SSH 登录 ECS 执行部署（先后端再前端）。
+# 触发：向下方分支 push 即自动运行；也可在 Actions 里手动 Run workflow。
 name: Build Push ACR And Deploy ECS
 
 on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   ACR_NAMESPACE: yvan-2000

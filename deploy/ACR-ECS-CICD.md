@@ -28,9 +28,10 @@ ACR 镜像路径：`<ACR_REGISTRY>/yvan-2000/zhangyuan.net`。
 
 ## 工作流行为
 
-1. 推送 `main` 或手动 **Run workflow**
-2. **build-push**：登录 ACR → 构建并推送后端 → 构建并推送前端
-3. **deploy**：SSH（**密码**）登录 ECS → 写入 **`~/.zhangyuan.env.images`** → `export ENV_IMAGES` 后执行 **`bash "$HOME/deploy.sh"`**（脚本默认在 **`/home/docker-deploy/`** 与 compose、`.env.production` 同目录）
+1. **自动**：向 **`main`** 或 **`master`** 分支 **push** 即触发（合并 PR 到这些分支也会触发）。同一分支上若连续推送，未完成的上一次运行会被取消（`cancel-in-progress`）。  
+2. **手动**：在 Actions 中选本工作流 → **Run workflow**。  
+3. **build-push**：登录 ACR → 构建并推送后端 → 构建并推送前端。  
+4. **deploy**：SSH（**密码**）登录 ECS → 写入 **`~/.zhangyuan.env.images`** → `export ENV_IMAGES` 后执行 **`bash "$HOME/deploy.sh"`**（脚本默认在 **`/home/docker-deploy/`** 与 compose、`.env.production` 同目录）。
 
 ---
 
