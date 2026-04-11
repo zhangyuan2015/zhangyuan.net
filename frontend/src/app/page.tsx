@@ -5,10 +5,7 @@ import {
   fetchPublicAlbums,
   fetchPublicSiteSettings,
 } from "@/lib/api";
-import { siteConfig } from "@/lib/site";
-
 export default async function HomePage() {
-  let siteTitle = siteConfig.name;
   let heroIntro =
     "这里会放一段关于你自己的感性介绍：走过的路、读过的书、按下快门时的光。";
   let socialLinks: Array<{ name: string; url: string }> = [];
@@ -19,7 +16,6 @@ export default async function HomePage() {
       fetchPublicSiteSettings(),
       fetchPublicAlbums(),
     ]);
-    siteTitle = settings.site_title || siteTitle;
     heroIntro = settings.hero_intro || heroIntro;
     socialLinks = settings.social_links;
     const latestAlbumDetails = await Promise.all(
