@@ -6,7 +6,7 @@ services:
     env_file:
       - /home/docker-deploy/.env.production
     ports:
-      - "127.0.0.1:8000:8000"
+      - "172.26.153.51:8000:8000"
 
   frontend:
     image: ${FRONTEND_IMAGE}
@@ -21,4 +21,4 @@ services:
       NEXT_PUBLIC_API_BASE_URL: /api/v1
     ports:
       # 避免与宿主机 80 冲突；对外由 Nginx 反代 http://127.0.0.1:3000
-      - "127.0.0.1:3000:3000"
+      - "172.26.153.51:3000:3000"
