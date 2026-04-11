@@ -10,14 +10,7 @@ export default async function BlogPage() {
 
   return (
     <div className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-50">
-          博客
-        </h1>
-        <p className="max-w-2xl text-slate-400">
-          已接入文章列表 API，Markdown 渲染、代码高亮与数学公式将在文章详情页完善。
-        </p>
-      </header>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-50">博客</h1>
       {posts.length === 0 ? (
         <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/40 p-10 text-center text-sm text-slate-500">
           暂无已发布文章

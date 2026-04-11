@@ -43,14 +43,7 @@ export default async function GalleryPage() {
 
   return (
     <div className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-50">
-          相册
-        </h1>
-        <p className="max-w-2xl text-slate-400">
-          已展示真实照片缩略图，支持点击放大预览与上一张 / 下一张切换。
-        </p>
-      </header>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-50">相册</h1>
       {albumGroups.length === 0 ? (
         <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/40 p-10 text-center text-sm text-slate-500">
           暂无相册数据

@@ -81,12 +81,6 @@ export default async function HomePage() {
             进入相册 →
           </Link>
         </div>
-        <p className="text-sm text-slate-500">
-          展示最近相册中的 3–4 张缩略图，当前已接入{" "}
-          <code className="rounded bg-slate-800 px-1 py-0.5 font-mono text-xs text-slate-300">
-            GET /api/v1/public/albums
-          </code>
-        </p>
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {latestPhotos.length > 0
             ? latestPhotos.map((item) => (
