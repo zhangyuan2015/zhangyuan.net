@@ -4,6 +4,19 @@ type RequestOptions = RequestInit & {
   cacheMode?: RequestCache;
 };
 
+function isBearerAuthorizedRequest(options: RequestOptions): boolean {
+  const merged = {
+    ...(typeof options.headers === "object" &&
+    options.headers !== null &&
+    !(options.headers instanceof Headers) &&
+    !Array.isArray(options.headers)
+      ? (options.headers as Record<string, string>)
+      : {}),
+  };
+  const auth = merged.Authorization;
+  return typeof auth === "string" && auth.startsWith("Bearer ");
+}
+
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const response = await fetch(`${resolveApiBaseUrl()}${path}`, {
     ...options,
@@ -15,6 +28,18 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   });
 
   if (!response.ok) {
+    if (
+      response.status === 401 &&
+      typeof window !== "undefined" &&
+      isBearerAuthorizedRequest(options)
+    ) {
+      try {
+        window.localStorage.removeItem("admin_token");
+      } catch {
+        /* ignore */
+      }
+      window.location.replace("/admin/login");
+    }
     let message = `Request failed: ${response.status}`;
     try {
       const payload = (await response.json()) as { detail?: string };
