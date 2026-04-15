@@ -16,6 +16,7 @@ export function SiteShell({ children }: SiteShellProps) {
       </main>
       <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
         <p>© {new Date().getFullYear()} {siteConfig.name}</p>
+        <p className="mt-2">作者：yvan.zhang</p>
       </footer>
     </div>
   );
