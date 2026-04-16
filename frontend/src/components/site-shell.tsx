@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
 import { SiteHeader } from "@/components/site-header";
-import { siteConfig } from "@/lib/site";
 
 type SiteShellProps = {
   children: ReactNode;
@@ -15,8 +14,9 @@ export function SiteShell({ children }: SiteShellProps) {
         {children}
       </main>
       <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
-        <p>© {new Date().getFullYear()} {siteConfig.name}</p>
-        <p className="mt-2">作者：yvan.zhang</p>
+        <p>
+          © {new Date().getFullYear()} zhangyuan.net · yvan.zhang
+        </p>
       </footer>
     </div>
   );
